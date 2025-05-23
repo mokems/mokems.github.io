@@ -1,0 +1,675 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luca Yu</title>
+    <link rel="shortcut icon" type="image/png" href="./source/hku.svg">
+    <!-- <link href="./source/css" rel="stylesheet"> -->
+    <!-- <link href="./source/css(1)" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> -->
+    <style>
+        /* Existing CSS */
+        .news-content {
+            display: none;
+            text-align: justify;
+        }
+
+        .toggle-button {
+            cursor: pointer;
+            color: #1772d0;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 16px;
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            margin-left: 4%;
+        }
+
+
+        .toggle-button:hover {
+            color: #f09228;
+        }
+
+
+        body.themed {
+            background-color: white;
+            color: black !important;
+        }
+
+        /* Specific styles for elements that should be purple in dark mode */
+        a.themed {
+            color: #bb86fc !important;
+        }
+
+        a.themed:hover {
+            color: #bb86fc !important;
+        }
+
+
+        @media (prefers-color-scheme: dark) {
+            body.themed {
+                background-color: black;
+                color: white !important;
+            }
+            
+            a.themed {
+                color: #bb86fc !important;
+            }
+
+            a.themed:hover {
+                color: #bb86fc !important;
+            }
+        }
+
+        .title {
+            font-family: 'Courier', 'Courier New'; /* Typewriter font */
+            font-size: 48px; /* Larger font size for the title */
+            font-weight: normal;
+            margin: 0; /* Remove default margins */
+            text-align: center; /* Center the text */
+        }
+
+        .subtitle {
+            font-family: 'Courier', 'Courier New'; /* Ensure the same typewriter font */
+            font-size: 18px; /* Smaller font size for the subtitle */
+            font-weight: normal;
+            margin: 0; /* Remove default margins */
+            text-align: center; /* Center the text */
+        }
+
+        /* Additional CSS */
+        a {
+            color: #1772d0;
+            text-decoration: none;
+        }
+
+        a:focus, a:hover {
+            color: #f09228;
+            text-decoration: none;
+        }
+
+        body, td, th {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        heading {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            font-size: 19px;
+            font-weight: bold
+        }
+
+        strong {
+            font-family: 'Lato', Verdana, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        strongred {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            color: 'red';
+            font-size: 16px
+        }
+
+        sectionheading {
+            font-family: 'Lato', Verdana, Helvetica, sans-serif;
+            font-size: 22px;
+            font-weight: bold
+        }
+
+        tableheading {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            max-width: 800px;
+        }
+
+        mapbody{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle{
+            width: 240px; 
+            height: 240px; 
+            border-radius: 50%; 
+            overflow: hidden;
+        }
+
+        .circle > img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .map-container {
+            width: 10%; 
+            height: 7%;
+        }
+
+        body.themed, a.themed, p, h1, h2, h3, h4, h5, h6, td, th {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .news-content {
+            display: none;
+            text-align: justify;
+        }
+
+
+        .news-table .news-date {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: normal; /* Remove bold styling */
+            padding-right: 10px;
+        }
+
+        .news-table .news-description {
+            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: left;
+        }
+
+        .news-table {
+            width: 100%;
+            text-align: justify;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body class="themed transition">
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script> -->
+
+    <script>
+        function fetchVisitorInfo() {
+            fetch('https://ipinfo.io/json?token=ba7f81bd5739bd')
+                .then(response => response.json())
+                .then(data => {
+                    const countryCode = data.country || "Unknown";
+                    const flag = countryCode !== "Unknown" ? getEmojiFlag(countryCode) : "";
+                    document.getElementById('visitor-country').textContent = `${countryCode} ${flag}`;
+                })
+                .catch(error => {
+                    console.log("Error fetching location data:", error);
+                    document.getElementById('visitor-country').textContent = "Unknown";
+                });
+        }
+
+        function getEmojiFlag(countryCode) {
+            return countryCode
+                .toUpperCase()
+                .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
+        }
+
+
+        window.onload = function() {
+            document.body.classList.add('themed');
+            fetchVisitorInfo(); // Fetch visitor's location info for display
+        };
+    </script>
+
+
+    
+    <script>
+        function toggleNews() {
+            var newsContent = document.getElementById("previousNews");
+            var toggleButton = document.querySelector(".toggle-button");
+
+            if (newsContent.style.display === "none" || newsContent.style.display === "") {
+                newsContent.style.display = "block";
+                toggleButton.textContent = "– older news";
+            } else {
+                newsContent.style.display = "none";
+                toggleButton.textContent = "+ older news";
+            }
+        }
+    </script>
+</body>
+
+
+<body>
+<table width="82%" border="0" align="center" cellspacing="0" cellpadding="20">
+    <tbody><tr>
+        <td align="center">
+            <div>
+                <h1 class="title">lucayu</h1>
+                <!-- <p class="subtitle">[AT] connect [DOT] hku [DOT] hk</p> -->
+            </div>
+        </td>        
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                <tbody><tr>
+                    <td width="67%" valign="middle" style="text-align:justify">
+
+
+                        <p>
+                            Hey! I am Luca Jiang-Tao Yu, a PhD student at <a href="https://aiot.hku.hk/">AIoT Lab</a>, <a href="https://www.cds.hku.hk/">CDS, HKU</a> in Hong Kong, advised by 
+                            <a href="https://cswu.me/">Prof. Chenshu Wu</a>. Previously, I was a research assistant at <a href="http://group.iiis.tsinghua.edu.cn/~marslab/#/">MARS Lab</a>, 
+                            <a href="https://iiis.tsinghua.edu.cn/en/">IIIS, THU</a> and <a href="https://sqz.ac.cn/en">Shanghai Qi Zhi Institute</a> in Shanghai and Beijing, China, advised by <a href="https://hangzhaomit.github.io/">Prof. Hang Zhao</a>. 
+                            Before that, I was a research intern at Beijing University of Posts and Telecommunications in Beijing, China, advised by <a href="https://teacher.bupt.edu.cn/zhouanfu/en/index.htm">Prof. Anfu Zhou</a>.
+                        </p>
+                        
+
+                        <p>    
+                            My research focuses on: <br>
+                            <li> wireless sensing, encompassing radar, Wi-Fi, and acoustic sensing applications. <br>
+                            <li> signal processing for sensing, including deep learning and signal processing co-design. <br>
+                            <li> human-centric AI, particularly in edge device-based healthcare and human-computer interaction. <br>
+                        </p>
+
+        
+                        </p><p align="center">
+                            <!-- <a href="files/cv.pdf">CV</a> | -->
+                            <a href="./source/cv.pdf">CV</a> |
+                            <a href="https://www.linkedin.com/in/luca-yu-806b91221/">LinkedIn</a> |
+                            <a href="mailto:lucayu@connect.hku.hk">E-Mail</a> |
+                            <a href="https://scholar.google.com/citations?user=VfJOVWsAAAAJ&hl=en">Google Scholar</a> |
+                            <a href="https://github.com/1ucayu/">GitHub</a> |
+                            <a href="https://x.com/1ucayu/">𝕏</a>
+                        </p>
+                    </td>
+
+                    <td width="100%" valign="top">
+                        <img src="./source/avatar.jpg" width="55%" onmouseover="this.src='./source/avatar_ca.png'" onmouseout="this.src='./source/avatar.jpg'">
+                    </td>
+
+                </tr>
+            </tbody></table>
+
+   
+
+            <!-- Pbulications -->
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                <tbody><tr>
+                    <td width="100%" valign="middle">
+                        <sectionheading>Publications</sectionheading>
+                        <!-- <p style="font-size: 20px"> * / &dagger; indicate co- / corresponding author</p> -->
+                    </td>
+                </tr>
+            </tbody></table>
+
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                <tbody>
+                <!-- <tr>
+                    <td width="40%">
+                        <div class="one">
+                            <div class="two"><img src="./source/space.png" alt="sym" width="100%" style="border-style: none"></div>
+                        </div>
+                    </td>
+                    <td valign="top" width="75%">
+                        <p><a href="https://arxiv.org/">
+                            <heading>USpeech: Ultrasound-Enhanced Speech with Minimal Human Effort via Cross-Modal Synthesis</heading>
+                        </a><br>
+                            Running Zhao, <strong>Luca Jiang-Tao Yu</strong>, Tingle Li, Zhihan Jiang, Chenwei Zhang, Chenshu Wu, Hang Zhao, Edith C.H. Ngai <br>
+                            <a href="https://arxiv.org/abs/">paper</a>
+                    </p></td>
+                </tr> -->
+                
+                <tr>
+                    <td width="40%">
+                        <div class="one">
+                            <div class="two"><img src="./source/uspeech.png" alt="sym" width="100%" style="border-style: none"></div>
+                        </div>
+                    </td>
+                    <td valign="top" width="75%">
+                        <p><a href="https://arxiv.org/abs/2410.22076">
+                            <heading>USpeech: Ultrasound-Enhanced Speech with Minimal Human Effort via Cross-Modal Synthesis</heading>
+                        </a><br>
+                            <strong>Luca Jiang-Tao Yu*</strong>, Running Zhao*, Sijie Ji, Edith C.H. Ngai, Chenshu Wu<sup>&dagger;</sup><br>
+                            Ubicomp 2025, Espoo, Finland 🇫🇮<br>
+                            <a href="https://arxiv.org/abs/2410.22076">paper</a> |
+                            <a href="https://github.com/aiot-lab/USpeech">code</a> |
+                            <a href="https://aiot-lab.github.io/USpeech">project</a>
+                    </p></td>
+                </tr>
+
+                <tr>
+                    <td width="40%">
+                        <div class="one">
+                            <div class="two"><img src="./source/neurodet.png" alt="sym" width="100%" style="border-style: none"></div>
+                        </div>
+                    </td>
+                    <td valign="top" width="75%">
+                        <p><a href="https://arxiv.org/abs/2410.22774">
+                            <!-- <img src="./source/new.png" alt="[NEW]" width="5%" style="border-style: none"> -->
+                            <heading>Unfolding Target Detection with State Space Mode</heading>
+                        </a><br>
+                            <strong>Luca Jiang-Tao Yu</strong>, Chenshu Wu<br>
+                            Pre-print<br>
+                            <a href="https://arxiv.org/abs/2410.22774">paper</a> |
+                            <a href="https://github.com/aiot-lab/NeuroDet">code</a>
+                    </p></td>
+                </tr>
+
+                <tr>
+                    <td width="40%">
+                        <div class="one">
+                            <div class="two"><img src="./source/radio2text.jpg" alt="sym" width="100%" style="border-style: none"></div>
+                        </div>
+                    </td>
+                    <td valign="top" width="75%">
+                        <p><a href="https://arxiv.org/pdf/2308.08125.pdf">
+                            <!-- <img src="./source/new.png" alt="[NEW]" width="5%" style="border-style: none"> -->
+                            <heading>Radio2Text: Streaming Speech Recognition using mmWave Radio Signals</heading>
+                        </a><br>
+                            Running Zhao*, <strong>Luca Jiang-Tao Yu*</strong>, Hang Zhao<sup>&dagger;</sup>, Edith C.H. Ngai<sup>&dagger;</sup><br>
+                            Ubicomp 2023, Cancún, Mexico 🇲🇽<br>
+                            <a href="https://arxiv.org/pdf/2308.08125.pdf">paper</a> |
+                            <a href="https://www.itmedia.co.jp/news/articles/2309/01/news047.html">media</a>
+                    </p></td>
+                </tr>
+                
+                    <tr>
+                        <td width="40%">
+                            <div class="one">
+                                <div class="two"><img src="./source/radio2speech.png" alt="sym" width="100%" style="border-style: none"></div>
+                            </div>
+                        </td>
+                        <td valign="top" width="75%">
+                            <p><a href="https://zhaorunning.github.io/Radio2Speech/">
+                                <!-- <img src="./source/new.png" alt="[NEW]" width="5%" style="border-style: none"> -->
+                                <heading>Radio2Speech: High Quality Speech Recovery from Radio Frequency Signals</heading>
+                            </a><br>
+                                Running Zhao, <strong>Luca Jiang-Tao Yu</strong>, Tingle Li, Hang Zhao<sup>&dagger;</sup>, Edith C.H. Ngai<sup>&dagger;</sup><br>
+                                Interspeech 2022, Incheon, South Korea 🇰🇷<br>
+                                <a href="https://arxiv.org/abs/2206.11066">paper</a> |
+                                <a href="https://github.com/ZhaoRunning/Radio2Speech">code</a> |
+                                <a href="https://zhaorunning.github.io/Radio2Speech/">project</a> |
+                                <a href="https://twitter.com/PeachhBin/status/1540024457212743685">media</a> |
+                                <a href="https://zhuanlan.zhihu.com/p/535323282">zhihu</a>
+                        </p></td>
+                    </tr>
+                    </tbody>
+                
+            </table>
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                <tbody>
+                    <tr>
+                        <td>
+                            <sectionheading>News</sectionheading>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="newsSection">
+                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="85%">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td valign="top" align="center">Apr. 2025</td>
+                            <td>
+                                One paper was accepted by <a href="https://www.ubicomp.org/ubicomp-iswc-2025/">Ubicomp 2025</a>! &#x1F389 &#x1F389
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="center">Oct. 2024</td>
+                            <td>
+                                Honored to be selected as a recipient of the <a href="https://signalprocessingsociety.org/gallery/2024-sps-scholarship-recipients">IEEE Signal Processing Society Scholarship</a>.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="center">Aug. 2024</td>
+                            <td>
+                                Honored to have been invited to serve as a PC member for <a href="https://attend.ieee.org/icpads/">ICPADS 2024</a>.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="center">Jul. 2023</td>
+                            <td>
+                                One paper was accepted by <a href="https://www.ubicomp.org/ubicomp-iswc-2023/">Ubicomp 2023</a>! &#x1F389 &#x1F389
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="toggle-button" onclick="toggleNews()">+ older news</button>
+
+                <div class="news-content" id="previousNews">
+                    <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="85%">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td valign="top" align="center">Jun. 2022</td>
+                                <td>
+                                    Graduated from BUPT, thanks all! &#127891 &#x1F389
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" align="center">Sept. 2022</td>
+                                <td>
+                                    I got a 4-year Ph.D. offer from the Dept. of CS, HKU, coming soon the next year! &#x1F389 &#x1F389
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" align="center">Jun. 2022</td>
+                                <td>
+                                    One paper was accepted by <a href="https://www.interspeech2022.org/">Interspeech 2022</a>! &#x1F389 &#x1F389
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" align="center">Nov. 2021</td>
+                                <td>
+                                    I joined MARS Lab, IIIS, Tsinghua University as a research intern, advised by Prof. Hang Zhao and worked at Shanghai Qi Zhi Institute.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" align="center">Jun. 2020</td>
+                                <td>
+                                    I joined Intelligent Comm. Software & Multimedia Key Lab as a research intern, School of CS, BUPT, advised by Prof. Anfu Zhou.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Awards -->
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                    <tbody><tr>
+                        <td>
+                            <sectionheading>Awards</sectionheading>
+                        </td>
+                    </tr>
+                </tbody></table>
+                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="85%">
+                    </colgroup>
+                    <tbody>
+
+                    <tr>
+                        <td valign="top" align="center">Oct. 2024</td>
+                        <td>
+                            IEEE Signal Processing Society Scholarship
+                        </td>
+                    </tr>
+                        
+                    <tr>
+                        <td valign="top" align="center">Sept. 2022</td>
+                        <td>
+                            HKU Postgraduate Scholarship
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td valign="top" align="center">Dec. 2021</td>
+                        <td>
+                            National Scholarship (Rank: 7/902, 0.7%)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top" align="center">Dec. 2021</td>
+                        <td>
+                            China Mobile Outstanding Student Scholarship (Rank: 2/192, 1%)
+                        </td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td valign="top" align="center">Aug. 2021</td>
+                        <td>
+                            1<sup>st</sup> prize in National College Students E-Commerce Competition
+                        </td>
+                    </tr> -->
+                    
+                    <tr>
+                        <td valign="top" align="center">Dec. 2020</td>
+                        <td>
+                            1<sup>st</sup> prize in National Math Competition for College (Engineering)
+                        </td>
+                    </tr>
+
+                    <!-- <tr>
+                        <td valign="top" align="center">Aug. 2020</td>
+                        <td>
+                            Outstanding Paper Nomination in the ”Shenzhen Cup” Math. Modeling Challenge National Finals (1<sup>st</sup> Author)
+                        </td>
+                    </tr> -->
+
+
+                    </tbody>
+                </table>
+
+            <!-- Academic Service -->
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <sectionheading>Academic Service</sectionheading>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="85%">
+                    </colgroup>
+                    <tbody>
+                        
+
+                        <tr>
+                            <td valign="top" align="center">TA</td>
+                            <td>
+                                COMP1117 (Computer Programming, '23 Spring), COMP7310 (Artificial Intelligence of Things, '24 Spring)
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td valign="top" align="center">Reviewer</td>
+                            <td>
+                                MobiSys '23, ATC '23, OSDI '23, Ubicomp '24 Nov, Ubicomp '25 Feb
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="center">PC Member</td>
+                            <td>
+                                ICPADS '24
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            <!-- Affiliations -->
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <sectionheading>Affiliations</sectionheading>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                
+                <table align="center">
+                    <tbody>
+                    <tr>
+                        <td width="20%" align="center">
+                            <a href="https://www.cds.hku.hk/" target="_blank">
+                                <img style="width:80px" src="./source/hku.svg"></a>
+                        </td>
+
+                        <td width="20%" align="center">
+                            <a href="https://sqz.ac.cn/en" target="_blank">
+                                <img style="width:80px" src="./source/sqz.svg"></a>
+                        </td>
+
+                        <td width="20%" align="center">
+                            <a href="https://iiis.tsinghua.edu.cn/en/" target="_blank">
+                                <img style="width:90px" src="./source/thu.svg"></a>
+                        </td>
+
+                        
+                        <td width="20%" align="center">
+                            <img style="width:90px" src="./source/bupt.svg">
+                        </td>
+                        
+                     
+                    </tr>
+                    <tr>
+                        <td width="20%" align="center"><font size="3">CDS, HKU<br>Hong Kong<br>2023 - present</font></td>
+                        <td width="20%" align="center"><font size="3">Shanghai Qi Zhi Institute<br>Shanghai, China<br>2021 - 2023</font></td>
+                        <td width="20%" align="center"><font size="3">IIIS, THU<br>Beijing, China<br>2021 - 2023</font></td>
+                        <td width="20%" align="center"><font size="3">SICE, BUPT<br>Beijing, China<br>2019 - 2023</font></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+        <mapbody>
+            <div class = "map-container">
+                <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=6QKN_nC6F0jSdJhkZsNqotd_TbAMZjnB7SKlhAnRgCk"></script>
+            </div>
+    
+            <!-- <tr> -->
+                <!-- <div id="visitor-info">Visitors from: <span id="visitor-country"></span></div> -->
+                
+            <!-- </tr> -->
+        </mapbody>
+
+
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+                <tbody>
+                <tr>
+                    <td>
+                        <div style="text-align: right;">
+                            <div id="visitor-info">Visitor from: <span id="visitor-country"></span></div>
+                            💛💙 Template Credits: <a href="https://unnat.github.io/">Unnat</a>
+                        </div>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+</tbody></table>
+
+</body></html>
