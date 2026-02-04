@@ -1,645 +1,527 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chengxiao Li</title>
-    <link rel="shortcut icon" type="image/png" href="./source/hku.svg">
-    <!-- <link href="./source/css" rel="stylesheet"> -->
-    <!-- <link href="./source/css(1)" rel="stylesheet" type="text/css"> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> -->
-    <style>
-        /* Existing CSS */
-        .news-content {
-            display: none;
-            text-align: justify;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chengxiao Li</title>
+  <link rel="shortcut icon" type="image/png" href="./source/hku.svg" />
 
-        .toggle-button {
-            cursor: pointer;
-            color: #1772d0;
-            text-decoration: underline;
-            background: none;
-            border: none;
-            padding: 0;
-            font-size: 16px;
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            margin-left: 4%;
-        }
+  <!-- Optional: better font (keep your current if you prefer) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #111827;
+      --muted: #4b5563;
+      --card: #ffffff;
+      --border: rgba(17, 24, 39, 0.10);
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
 
-        .toggle-button:hover {
-            color: #f09228;
-        }
+      --link: #1772d0;
+      --link-hover: #f09228;
 
+      --accent: #1772d0;
+      --accent-soft: rgba(23, 114, 208, 0.12);
+    }
 
-        body.themed {
-            background-color: white;
-            color: black !important;
-        }
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg: #0b0f19;
+        --fg: #e5e7eb;
+        --muted: #a1a1aa;
+        --card: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.10);
+        --shadow: 0 10px 30px rgba(0,0,0,0.45);
 
-        /* Specific styles for elements that should be purple in dark mode */
-        a.themed {
-            color: #bb86fc !important;
-        }
+        --link: #bb86fc;
+        --link-hover: #bb86fc;
 
-        a.themed:hover {
-            color: #bb86fc !important;
-        }
+        --accent: #bb86fc;
+        --accent-soft: rgba(187, 134, 252, 0.16);
+      }
+    }
 
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Titillium Web", Verdana, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
 
-        @media (prefers-color-scheme: dark) {
-            body.themed {
-                background-color: black;
-                color: white !important;
-            }
-            
-            a.themed {
-                color: #bb86fc !important;
-            }
+    a{
+      color: var(--link);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover{ color: var(--link-hover); }
 
-            a.themed:hover {
-                color: #bb86fc !important;
-            }
-        }
+    /* Layout */
+    .container{
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 36px;
+    }
 
-        .title {
-            font-family: 'Courier', 'Courier New'; /* Typewriter font */
-            font-size: 48px; /* Larger font size for the title */
-            font-weight: normal;
-            margin: 0; /* Remove default margins */
-            text-align: center; /* Center the text */
-        }
+    .top{
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 22px;
+      align-items: center;
+      padding: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
 
-        .subtitle {
-            font-family: 'Courier', 'Courier New'; /* Ensure the same typewriter font */
-            font-size: 18px; /* Smaller font size for the subtitle */
-            font-weight: normal;
-            margin: 0; /* Remove default margins */
-            text-align: center; /* Center the text */
-        }
+    @media (max-width: 820px){
+      .top{
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+    }
 
-        /* Additional CSS */
-        a {
-            color: #1772d0;
-            text-decoration: none;
-        }
+    /* Title */
+    .title-wrap{
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .title{
+      font-family: "Source Code Pro", "Courier New", Courier, monospace;
+      font-weight: 600;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.15;
+      margin: 16px 0 6px;
+      letter-spacing: 0.2px;
+    }
+    .subtitle{
+      font-family: "Source Code Pro", "Courier New", Courier, monospace;
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 4px;
+    }
 
-        a:focus, a:hover {
-            color: #f09228;
-            text-decoration: none;
-        }
+    /* Bio */
+    .bio p{
+      margin: 10px 0;
+      color: var(--fg);
+    }
+    .bio ul{
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+    .bio li{
+      margin: 6px 0;
+      color: var(--fg);
+    }
 
-        body, td, th {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: 400;
-        }
-        
-        heading {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            font-size: 19px;
-            font-weight: bold
-        }
+    .links{
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .chip:hover{
+      border-color: rgba(23,114,208,0.35);
+    }
 
-        strong {
-            font-family: 'Lato', Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    /* Avatar */
+    .avatar{
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.02);
+    }
+    .avatar img{
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
-        strongred {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            color: 'red';
-            font-size: 16px
-        }
+    /* Sections */
+    .section{
+      margin-top: 22px;
+      padding: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
 
-        sectionheading {
-            font-family: 'Lato', Verdana, Helvetica, sans-serif;
-            font-size: 22px;
-            font-weight: bold
-        }
+    .section-title{
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 14px;
+      letter-spacing: 0.2px;
+    }
 
-        tableheading {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            max-width: 800px;
-        }
+    /* Publications list */
+    .pub-list{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
-        mapbody{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .pub{
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
 
-        .circle{
-            width: 240px; 
-            height: 240px; 
-            border-radius: 50%; 
-            overflow: hidden;
-        }
+    @media (max-width: 820px){
+      .pub{
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .circle > img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .pub-thumb{
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+    .pub-thumb img{
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-        .map-container {
-            width: 10%; 
-            height: 7%;
-        }
+    .pub-title{
+      font-weight: 800;
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .pub-meta{
+      margin: 0;
+      color: var(--muted);
+    }
+    .pub-links{
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pub-links a{
+      font-weight: 700;
+      font-size: 14px;
+    }
 
-        body.themed, a.themed, p, h1, h2, h3, h4, h5, h6, td, th {
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+    /* Two-column simple tables (Awards, Service) */
+    .kv{
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .kv tr{
+      border-top: 1px solid var(--border);
+    }
+    .kv tr:first-child{
+      border-top: none;
+    }
+    .kv td{
+      padding: 10px 0;
+      vertical-align: top;
+    }
+    .kv .k{
+      width: 140px;
+      color: var(--muted);
+      font-weight: 600;
+      padding-right: 14px;
+      white-space: nowrap;
+    }
+    @media (max-width: 520px){
+      .kv .k{
+        width: 110px;
+      }
+    }
 
-        .news-content {
-            display: none;
-            text-align: justify;
-        }
+    /* Footer */
+    .footer{
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 0 6px;
+    }
 
+    /* News toggle */
+    .news-content{ display: none; }
+    .toggle-button{
+      cursor: pointer;
+      color: var(--link);
+      text-decoration: underline;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 14px;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+    .toggle-button:hover{ color: var(--link-hover); }
 
-        .news-table .news-date {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: normal; /* Remove bold styling */
-            padding-right: 10px;
-        }
-
-        .news-table .news-description {
-            font-family: 'Titillium Web', Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: normal;
-            text-align: left;
-        }
-
-        .news-table {
-            width: 100%;
-            text-align: justify;
-        }
-
-        .news-item {
-            display: flex;
-            align-items: center;
-        }
-
-    </style>
-</head>
-<body class="themed transition">
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script> -->
-
-    <script>
-        function fetchVisitorInfo() {
-            fetch('https://ipinfo.io/json?token=ba7f81bd5739bd')
-                .then(response => response.json())
-                .then(data => {
-                    const countryCode = data.country || "Unknown";
-                    const flag = countryCode !== "Unknown" ? getEmojiFlag(countryCode) : "";
-                    document.getElementById('visitor-country').textContent = `${countryCode} ${flag}`;
-                })
-                .catch(error => {
-                    console.log("Error fetching location data:", error);
-                    document.getElementById('visitor-country').textContent = "Unknown";
-                });
-        }
-
-        function getEmojiFlag(countryCode) {
-            return countryCode
-                .toUpperCase()
-                .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
-        }
-
-
-        window.onload = function() {
-            document.body.classList.add('themed');
-            fetchVisitorInfo(); // Fetch visitor's location info for display
-        };
-    </script>
-
-
+    /* ClustrMaps globe wrapper */
+    .clustr-wrap{
+        display: flex;
+        justify-content: center;
+        margin-top: 12px;
+    }
     
-    <script>
-        function toggleNews() {
-            var newsContent = document.getElementById("previousNews");
-            var toggleButton = document.querySelector(".toggle-button");
+    /* 外框尺寸：你可以改 220 / 240 */
+    #clustrmap{
+        width: 220px;
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 14px;            /* 可选：更贴合卡片风格 */
+    }
+    
+    /* 关键：缩放 ClustrMaps 注入的内部元素（canvas / div / svg） */
+    #clustrmap canvas,
+    #clustrmap svg,
+    #clustrmap iframe,
+    #clustrmap > div{
+        transform: scale(0.55);         /* 调小就更小：0.5 更小，0.6 更大 */
+        transform-origin: top left;
+    }
+  </style>
 
-            if (newsContent.style.display === "none" || newsContent.style.display === "") {
-                newsContent.style.display = "block";
-                toggleButton.textContent = "– older news";
-            } else {
-                newsContent.style.display = "none";
-                toggleButton.textContent = "+ older news";
-            }
-        }
-    </script>
-</body>
+  <script>
+    function fetchVisitorInfo() {
+      fetch('https://ipinfo.io/json?token=ba7f81bd5739bd')
+        .then(r => r.json())
+        .then(data => {
+          const countryCode = data.country || "Unknown";
+          const flag = countryCode !== "Unknown" ? getEmojiFlag(countryCode) : "";
+          const el = document.getElementById('visitor-country');
+          if (el) el.textContent = `${countryCode} ${flag}`;
+        })
+        .catch(() => {
+          const el = document.getElementById('visitor-country');
+          if (el) el.textContent = "Unknown";
+        });
+    }
 
+    function getEmojiFlag(countryCode) {
+      return countryCode
+        .toUpperCase()
+        .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
+    }
+
+    function toggleNews() {
+      const newsContent = document.getElementById("previousNews");
+      const btn = document.querySelector(".toggle-button");
+      if (!newsContent || !btn) return;
+
+      const isHidden = (newsContent.style.display === "none" || newsContent.style.display === "");
+      newsContent.style.display = isHidden ? "block" : "none";
+      btn.textContent = isHidden ? "– older news" : "+ older news";
+    }
+
+    window.addEventListener("load", () => {
+      fetchVisitorInfo();
+    });
+  </script>
+</head>
 
 <body>
-<table width="82%" border="0" align="center" cellspacing="0" cellpadding="20">
-    <tbody><tr>
-        <td align="center">
-            <div>
-                <h1 class="title">Chengxiao Li</h1>
-                <!-- <p class="subtitle">[AT] connect [DOT] hku [DOT] hk</p> -->
+  <div class="container">
+    <div class="title-wrap">
+      <h1 class="title">Chengxiao Li</h1>
+      <!-- <p class="subtitle">[AT] connect [DOT] hku [DOT] hk</p> -->
+    </div>
+
+    <section class="top">
+      <div class="bio">
+        <p>
+          Hey! I am Chengxiao Li, a PhD student at <a href="https://aiot.hku.hk/">AIoT Lab</a>,
+          <a href="https://www.cds.hku.hk/">CDS, HKU</a> in Hong Kong, advised by
+          <a href="https://cswu.me/">Prof. Chenshu Wu</a>.
+          Before that, I received my B.Eng from Dalian University of Technology (DLUT) and my M.Sc from the University of Hong Kong (HKU).
+        </p>
+
+        <p style="margin-bottom: 6px; font-weight:700;">Research interests</p>
+        <ul>
+          <li>AI for healthcare, leveraging wireless sensors such as infrared array (IRA) and Wi-Fi for healthcare sensing tasks.</li>
+          <li>Wireless sensing, encompassing IRA, DToF sensor, mmWave radar, and WiFi applications.</li>
+          <li>Human-centric AI, especially edge-device-based healthcare and human–computer interaction.</li>
+        </ul>
+
+        <div class="links">
+          <a class="chip" href="mailto:chengxiaoli@connect.hku.hk">E-Mail</a>
+          <a class="chip" href="https://scholar.google.com/citations?user=usRnJPMAAAAJ&hl=en">Google Scholar</a>
+        </div>
+      </div>
+
+      <div class="avatar">
+        <img
+          src="./source/avatar.jpg"
+          alt="avatar"
+          onmouseover="this.src='./source/avatar_ca.png'"
+          onmouseout="this.src='./source/avatar.jpg'"
+        />
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Publications</h2>
+      <div class="pub-list">
+
+        <article class="pub">
+          <div class="pub-thumb">
+            <img src="./source/Toface.png" alt="DToF" />
+          </div>
+          <div>
+            <p class="pub-title">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10887978">Facial Expression Recognition with DToF Sensing</a>
+            </p>
+            <p class="pub-meta"><strong>Chengxiao Li</strong>, Zhangxie, Chenshu Wu<sup>&dagger;</sup></p>
+            <p class="pub-meta">ICASSP 2025</p>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10887978">paper</a>
             </div>
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                <tbody><tr>
-                    <td width="67%" valign="middle" style="text-align:justify">
+          </div>
+        </article>
 
-
-                        <p>
-                            Hey! I am Chengxiao Li, a PhD student at <a href="https://aiot.hku.hk/">AIoT Lab</a>, <a href="https://www.cds.hku.hk/">CDS, HKU</a> in Hong Kong, advised by 
-                            <a href="https://cswu.me/">Prof. Chenshu Wu</a>. Before that, I received my B.Eng from Dalian University of Technology (DLUT) and my M.Sc from the University of Hong Kong (HKU).
-
-                        </p>
-                        
-                        <p>
-                            My research interests lie in the following areas:
-                        <p>    
-                            <li>AI for healthcare, leveraging wireless sensors such as infrared array (IRA) and Wi-Fi to address healthcare–related sensing tasks.</li><br> 
-                            <li>Wireless sensing, encompassing IRA, DToF Sensor, mmWave radar, and WiFi applications.</li><br> 
-                            <li>Human-centric AI, particularly in edge device–based healthcare and human–computer interaction.</li><br>
-                        </p>
-
-        
-                        </p><p align="center">
-                            <!-- <a href="files/cv.pdf">CV</a> | -->
-                            
-                            
-                            <a href="mailto:chengxiaoli@connect.hku.hk">E-Mail</a> |
-                            <a href="https://scholar.google.com/citations?user=usRnJPMAAAAJ&hl=en">Google Scholar</a> 
-                            
-                            
-                        </p>
-                    </td>
-
-                    <td width="100%" valign="top">
-                        <img src="./source/avatar.jpg" width="100%" onmouseover="this.src='./source/avatar_ca.png'" onmouseout="this.src='./source/avatar.jpg'">
-                    </td>
-
-                </tr>
-            </tbody></table>
-
-   
-
-            <!-- Pbulications -->
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                <tbody><tr>
-                    <td width="100%" valign="middle">
-                        <sectionheading>Publications</sectionheading>
-                        <!-- <p style="font-size: 20px"> * / &dagger; indicate co- / corresponding author</p> -->
-                    </td>
-                </tr>
-            </tbody></table>
-
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                <tbody>
-                <!-- <tr>
-                    <td width="40%">
-                        <div class="one">
-                            <div class="two"><img src="./source/space.png" alt="sym" width="100%" style="border-style: none"></div>
-                        </div>
-                    </td>
-                    <td valign="top" width="75%">
-                        <p><a href="https://arxiv.org/">
-                            <heading>USpeech: Ultrasound-Enhanced Speech with Minimal Human Effort via Cross-Modal Synthesis</heading>
-                        </a><br>
-                            Running Zhao, <strong>Luca Jiang-Tao Yu</strong>, Tingle Li, Zhihan Jiang, Chenwei Zhang, Chenshu Wu, Hang Zhao, Edith C.H. Ngai <br>
-                            <a href="https://arxiv.org/abs/">paper</a>
-                    </p></td>
-                </tr> -->
-                
-                <tr>
-                    <td width="40%">
-                        <div class="one">
-                            <div class="two"><img src="./source/Toface.png" alt="sym" width="100%" style="border-style: none"></div>
-                        </div>
-                    </td>
-                    <td valign="top" width="75%">
-                        <p><a href="https://ieeexplore.ieee.org/abstract/document/10887978">
-                            <heading>Facial Expression Recognition with DToF Sensing</heading>
-                        </a><br>
-                            <strong>Chengxiao Li</strong>, Zhangxie, Chenshu Wu<sup>&dagger;</sup><br>
-                            ICASSP 2025 <br>
-                            <a href="https://ieeexplore.ieee.org/abstract/document/10887978">paper</a> 
-                            
-                    </p></td>
-                </tr>
-
-                <tr>
-                    <td width="40%">
-                        <div class="one">
-                            <div class="two"><img src="./source/Tapor.png" alt="sym" width="100%" style="border-style: none"></div>
-                        </div>
-                    </td>
-                    <td valign="top" width="75%">
-                        <p><a href="https://arxiv.org/abs/2501.17585">
-                            <!-- <img src="./source/new.png" alt="[NEW]" width="5%" style="border-style: none"> -->
-                            <heading>Tapor: 3D Hand Pose Reconstruction with Fully Passive Thermal Sensing for Around-device Interactions</heading>
-                        </a><br>
-                            Xie Zhang, <strong>Chengxiao Li</strong>, Chenshu Wu<br>
-                            Ubicomp 2025<br>
-                            <a href="https://arxiv.org/abs/2501.17585">paper</a> 
-                            
-                    </p></td>
-                </tr>
-
-                <tr>
-                    <td width="40%">
-                        <div class="one">
-                            <div class="two"><img src="./source/multi.png" alt="sym" width="100%" style="border-style: none"></div>
-                        </div>
-                    </td>
-                    <td valign="top" width="75%">
-                        <p><a href="">
-                            <!-- <img src="./source/new.png" alt="[NEW]" width="5%" style="border-style: none"> -->
-                            <heading>OctoNet: A Large-Scale Multi-Modal Dataset for Human Activity Understanding Grounded in Motion-Captured 3D Pose Labels</heading>
-                        </a><br>
-                            Dongsheng Yuan, Xie Zhang, Weiying Hou, Sheng Lyu, Luca Jiang-Tao Yu, Yuemin Yu, <strong>Chengxiao Li</strong>, Chenshu Wu<br>
-                            NeurIPS 2025 D&B<br>
-                            <!-- <a href="https://arxiv.org/abs/2501.17585">paper</a>  -->
-                            
-                    </p></td>
-                </tr>
-
-                
-                
-                <tr>
-                    </tbody>
-                
-            <!-- </table>
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                <tbody>
-                    <tr>
-                        <td>
-                            <sectionheading>News</sectionheading>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div id="newsSection">
-                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
-                    <colgroup>
-                        <col width="15%">
-                        <col width="85%">
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td valign="top" align="center">Apr. 2025</td>
-                            <td>
-                                One paper was accepted by <a href="https://www.ubicomp.org/ubicomp-iswc-2025/">Ubicomp 2025</a>! &#x1F389 &#x1F389
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td valign="top" align="center">Oct. 2024</td>
-                            <td>
-                                Honored to be selected as a recipient of the <a href="https://signalprocessingsociety.org/gallery/2024-sps-scholarship-recipients">IEEE Signal Processing Society Scholarship</a>.
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td valign="top" align="center">Aug. 2024</td>
-                            <td>
-                                Honored to have been invited to serve as a PC member for <a href="https://attend.ieee.org/icpads/">ICPADS 2024</a>.
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td valign="top" align="center">Jul. 2023</td>
-                            <td>
-                                One paper was accepted by <a href="https://www.ubicomp.org/ubicomp-iswc-2023/">Ubicomp 2023</a>! &#x1F389 &#x1F389
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button class="toggle-button" onclick="toggleNews()">+ older news</button>
-
-                <div class="news-content" id="previousNews">
-                    <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
-                        <colgroup>
-                            <col width="15%">
-                            <col width="85%">
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <td valign="top" align="center">Jun. 2022</td>
-                                <td>
-                                    Graduated from BUPT, thanks all! &#127891 &#x1F389
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top" align="center">Sept. 2022</td>
-                                <td>
-                                    I got a 4-year Ph.D. offer from the Dept. of CS, HKU, coming soon the next year! &#x1F389 &#x1F389
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top" align="center">Jun. 2022</td>
-                                <td>
-                                    One paper was accepted by <a href="https://www.interspeech2022.org/">Interspeech 2022</a>! &#x1F389 &#x1F389
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top" align="center">Nov. 2021</td>
-                                <td>
-                                    I joined MARS Lab, IIIS, Tsinghua University as a research intern, advised by Prof. Hang Zhao and worked at Shanghai Qi Zhi Institute.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top" align="center">Jun. 2020</td>
-                                <td>
-                                    I joined Intelligent Comm. Software & Multimedia Key Lab as a research intern, School of CS, BUPT, advised by Prof. Anfu Zhou.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> -->
-
-            <!-- Awards -->
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                    <tbody><tr>
-                        <td>
-                            <sectionheading>Awards</sectionheading>
-                        </td>
-                    </tr>
-                </tbody></table>
-                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
-                    <colgroup>
-                        <col width="15%">
-                        <col width="85%">
-                    </colgroup>
-                    <tbody>
-
-                    <!-- <tr>
-                        <td valign="top" align="center">Oct. 2024</td>
-                        <td>
-                            IEEE Signal Processing Society Scholarship
-                        </td>
-                    </tr> -->
-                        
-                    <tr>
-                        <td valign="top" align="center">Sept. 2024</td>
-                        <td>
-                            HKU Postgraduate Scholarship
-                        </td>
-                    </tr>
-                
-                    <tr>
-                        <td valign="top" align="center">Oct. 2020</td>
-                        <td>
-                            DLUT Social Practice Scholarship
-                        </td>
-                    </tr>
-
-                    
-
-                    <!-- <tr>
-                        <td valign="top" align="center">Aug. 2021</td>
-                        <td>
-                            1<sup>st</sup> prize in National College Students E-Commerce Competition
-                        </td>
-                    </tr> -->
-                    
-                    <!-- <tr>
-                        <td valign="top" align="center">Dec. 2020</td>
-                        <td>
-                            1<sup>st</sup> prize in National Math Competition for College (Engineering)
-                        </td>
-                    </tr> -->
-
-                    <!-- <tr>
-                        <td valign="top" align="center">Aug. 2020</td>
-                        <td>
-                            Outstanding Paper Nomination in the ”Shenzhen Cup” Math. Modeling Challenge National Finals (1<sup>st</sup> Author)
-                        </td>
-                    </tr> -->
-
-
-                    </tbody>
-                </table>
-
-            <!-- Academic Service -->
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <sectionheading>Academic Service</sectionheading>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="news-table" width="100%" align="center" border="0" style="text-align: justify">
-                    <colgroup>
-                        <col width="15%">
-                        <col width="85%">
-                    </colgroup>
-                    <tbody>
-                        
-
-                        <tr>
-                            <td valign="top" align="center">TA</td>
-                            <td>
-                                COMP3230 (Principles of operating systems, 2024)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td valign="top" align="center">TA</td>
-                            <td>
-                                COMP3230 (Principles of operating systems, 2025)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td valign="top" align="center">Workshop Web Chair</td>
-                            <td>
-                                 <a href="https://hotsense.github.io/">HotSense</a> @ ACM MobiCom 2025
-                            </td>
-                        </tr>
-                        
-                        
-                        </tr>
-
-                    </tbody>
-                </table>
-
-            <!-- Affiliations -->
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <sectionheading>Affiliations</sectionheading>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                
-                <table align="center">
-                    <tbody>
-                    <tr>
-                        <td width="20%" align="center">
-                            <a href="https://www.cds.hku.hk/" target="_blank">
-                                <img style="width:80px" src="./source/hku.svg"></a>
-                        </td>
-
-                        <td width="20%" align="center">
-                            <a href="https://en.dlut.edu.cn/" target="_blank">
-                                <img style="width:80px" src="./source/DLUT_logo.png"></a>
-                        </td>
-
-                        
-                     
-                    </tr>
-                    <tr>
-                        <td width="20%" align="center"><font size="3">CDS, HKU<br>Hong Kong<br>2022 - present</font></td>
-                        <td width="20%" align="center"><font size="3">School of Software, DLUT <br>Dalian, China<br>2018 - 2022</font></td>
-                        
-                    </tr>
-
-
-                    </tbody>
-                </table>
-
-        <mapbody>
-            <div class = "map-container">
-                <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=fXw9Vlslih10VunNBDNhv7my0H_HH5a6kCFwKiB-Jas"></script>
-                <!-- <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                            z-index: 9999; background: transparent; pointer-events: auto;">
-                </div> -->
+        <article class="pub">
+          <div class="pub-thumb">
+            <img src="./source/Tapor.png" alt="Tapor" />
+          </div>
+          <div>
+            <p class="pub-title">
+              <a href="https://arxiv.org/abs/2501.17585">Tapor: 3D Hand Pose Reconstruction with Fully Passive Thermal Sensing for Around-device Interactions</a>
+            </p>
+            <p class="pub-meta">Xie Zhang, <strong>Chengxiao Li</strong>, Chenshu Wu</p>
+            <p class="pub-meta">Ubicomp 2025</p>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2501.17585">paper</a>
             </div>
-            
-           
-              
-        </mapbody>
+          </div>
+        </article>
+
+        <article class="pub">
+          <div class="pub-thumb">
+            <img src="./source/multi.png" alt="OctoNet" />
+          </div>
+          <div>
+            <p class="pub-title">OctoNet: A Large-Scale Multi-Modal Dataset for Human Activity Understanding Grounded in Motion-Captured 3D Pose Labels</p>
+            <p class="pub-meta">Dongsheng Yuan, Xie Zhang, Weiying Hou, Sheng Lyu, Luca Jiang-Tao Yu, Yuemin Yu, <strong>Chengxiao Li</strong>, Chenshu Wu</p>
+            <p class="pub-meta">NeurIPS 2025 D&amp;B</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Awards</h2>
+      <table class="kv">
+        <tr>
+          <td class="k">Sept. 2024</td>
+          <td>HKU Postgraduate Scholarship</td>
+        </tr>
+        <tr>
+          <td class="k">Oct. 2020</td>
+          <td>DLUT Social Practice Scholarship</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Academic Service</h2>
+      <table class="kv">
+        <tr>
+          <td class="k">TA</td>
+          <td>COMP3230 (Principles of operating systems, 2024)</td>
+        </tr>
+        <tr>
+          <td class="k">TA</td>
+          <td>COMP3230 (Principles of operating systems, 2025)</td>
+        </tr>
+        <tr>
+          <td class="k">Workshop Web Chair</td>
+          <td><a href="https://hotsense.github.io/">HotSense</a> @ ACM MobiCom 2025</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Affiliations</h2>
+      <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap;">
+        <a href="https://www.cds.hku.hk/" target="_blank" style="display:inline-flex; align-items:center; gap:10px;">
+          <img src="./source/hku.svg" style="width:72px; height:auto;" alt="HKU">
+          <div>
+            <div style="font-weight:800;">CDS, HKU</div>
+            <div style="color:var(--muted); font-size:14px;">Hong Kong · 2022 - present</div>
+          </div>
+        </a>
+
+        <a href="https://en.dlut.edu.cn/" target="_blank" style="display:inline-flex; align-items:center; gap:10px;">
+          <img src="./source/DLUT_logo.png" style="width:72px; height:auto;" alt="DLUT">
+          <div>
+            <div style="font-weight:800;">School of Software, DLUT</div>
+            <div style="color:var(--muted); font-size:14px;">Dalian, China · 2018 - 2022</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- <div style="margin-top:16px; display:flex; justify-content:center;">
+        <div style="width:min(260px, 70vw); opacity:0.95;">
+          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=fXw9Vlslih10VunNBDNhv7my0H_HH5a6kCFwKiB-Jas"></script>
+        </div>
+      </div> -->
+
+      <div class="clustr-wrap">
+        <div id="clustrmap"></div>
+        <script
+          type="text/javascript"
+          id="clstr_globe"
+          src="https://clustrmaps.com/globe.js?d=fXw9Vlslih10VunNBDNhv7my0H_HH5a6kCFwKiB-Jas">
+        </script>
+      </div>
+      
 
 
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-                <tbody>
-                <tr>
-                    <td>
-                        <div style="text-align: right;">
-                            <div id="visitor-info">Visitor from: <span id="visitor-country"></span></div>
-                            💛💙 Template Credits: <a href="https://unnat.github.io/">Unnat</a>
-                        </div>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
+    </section>
 
-</tbody></table>
-
-</body></html>
+    <div class="footer">
+      <div id="visitor-info">Visitor from: <span id="visitor-country"></span></div>
+      <div>💛💙 Template Credits: <a href="https://unnat.github.io/">Unnat</a></div>
+    </div>
+  </div>
+</body>
+</html>
