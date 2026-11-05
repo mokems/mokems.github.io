@@ -207,6 +207,7 @@
     }
 
     .pub-thumb{
+      align-self: center;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
@@ -226,6 +227,15 @@
     .pub-meta{
       margin: 0;
       color: var(--muted);
+    }
+    .pub-award{
+      display: inline-block;
+      margin-top: 5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      font-size: 14px;
+      font-weight: 700;
     }
     .pub-links{
       margin-top: 6px;
@@ -266,6 +276,12 @@
       }
     }
 
+    .visitor-map{
+      width: min(100%, 400px);
+      margin: 18px auto 0;
+      text-align: center;
+    }
+
     /* Footer */
     .footer{
       margin-top: 18px;
@@ -293,31 +309,6 @@
       margin-top: 8px;
     }
     .toggle-button:hover{ color: var(--link-hover); }
-
-    /* ClustrMaps globe wrapper */
-    .clustr-wrap{
-        display: flex;
-        justify-content: center;
-        margin-top: 12px;
-    }
-    
-    /* 外框尺寸：你可以改 220 / 240 */
-    #clustrmap{
-        width: 220px;
-        height: 220px;
-        overflow: hidden;
-        position: relative;
-        border-radius: 14px;            /* 可选：更贴合卡片风格 */
-    }
-    
-    /* 关键：缩放 ClustrMaps 注入的内部元素（canvas / div / svg） */
-    #clustrmap canvas,
-    #clustrmap svg,
-    #clustrmap iframe,
-    #clustrmap > div{
-        transform: scale(0.55);         /* 调小就更小：0.5 更小，0.6 更大 */
-        transform-origin: top left;
-    }
   </style>
 
   <script>
@@ -403,6 +394,40 @@
 
         <article class="pub">
           <div class="pub-thumb">
+            <img src="./source/tafall.png" alt="TaFall system overview" width="998" height="460" loading="lazy" />
+          </div>
+          <div>
+            <p class="pub-title">
+              <a href="https://arxiv.org/abs/2604.09693">TaFall: Balance-Informed Fall Detection via Passive Thermal Sensing</a>
+            </p>
+            <p class="pub-meta"><strong>Chengxiao Li</strong>, Xie Zhang, Wei Zhu, Yan Jiang, Chenshu Wu</p>
+            <p class="pub-meta">Accepted for UbiComp 2027</p>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2604.09693">arXiv</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub">
+          <div class="pub-thumb">
+            <img src="./source/tap3D.png" alt="TAP3D thermal sensing and reconstructed human point clouds" width="1400" height="449" loading="lazy" />
+          </div>
+          <div>
+            <p class="pub-title">
+              <a href="https://arxiv.org/abs/2610.11241">TAP3D: Thermal-Assisted 3D Human Point Clouds</a>
+            </p>
+            <p class="pub-meta">Xie Zhang, <strong>Chengxiao Li</strong>, Xuan Liu, Chenshu Wu</p>
+            <p class="pub-meta">ACM MobiCom 2026</p>
+            <a class="pub-award" href="https://www.sigmobile.org/mobicom/2026/awards.html">Best Paper Runner-Up</a>
+            <div class="pub-links">
+              <a href="https://arxiv.org/abs/2610.11241">arXiv</a>
+              <a href="https://github.com/aiot-lab/TAP3D">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub">
+          <div class="pub-thumb">
             <img src="./source/Toface.png" alt="DToF" />
           </div>
           <div>
@@ -473,6 +498,14 @@
           <td>COMP3230 (Principles of operating systems, 2025)</td>
         </tr>
         <tr>
+          <td class="k">TA</td>
+          <td>COMP3230 (Principles of operating systems, 2026)</td>
+        </tr>
+        <tr>
+          <td class="k">Reviewer</td>
+          <td>IEEE ICASSP, IEEE Transactions on Mobile Computing (TMC)</td>
+        </tr>
+        <tr>
           <td class="k">Workshop Web Chair</td>
           <td><a href="https://hotsense.github.io/">HotSense</a> @ ACM MobiCom 2025</td>
         </tr>
@@ -498,25 +531,11 @@
           </div>
         </a>
       </div>
-
-      <!-- <div style="margin-top:16px; display:flex; justify-content:center;">
-        <div style="width:min(260px, 70vw); opacity:0.95;">
-          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=fXw9Vlslih10VunNBDNhv7my0H_HH5a6kCFwKiB-Jas"></script>
-        </div>
-      </div> -->
-
-      <div class="clustr-wrap">
-        <div id="clustrmap"></div>
-        <script
-          type="text/javascript"
-          id="clstr_globe"
-          src="https://clustrmaps.com/globe.js?d=fXw9Vlslih10VunNBDNhv7my0H_HH5a6kCFwKiB-Jas">
-        </script>
-      </div>
-      
-
-
     </section>
+
+    <div class="visitor-map" role="region" aria-label="Visitor map">
+      <script id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?d=NiPLw9UeKqKiyAOgzHHVc4iD0x55ATCD65234WLG5IQ&amp;cl=ffffff&amp;w=a"></script>
+    </div>
 
     <div class="footer">
       <div id="visitor-info">Visitor from: <span id="visitor-country"></span></div>
